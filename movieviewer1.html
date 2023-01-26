@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch movie</title>
+    
+    <link href="main.js">
+    <!--Box icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com//swiper/swiper-bundle.min.css"
+    />
+     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    scroll-padding-top: 2rem;
+    scroll-behavior: smooth;   
+}
+/*some variables*/
+:root{
+    --main-color:	#7447B8;
+    --text-color: #020307;
+    --bg-color:#fff;
+}
+/* custom scrollbar */
+html::-webkit-scrollbar{
+  width: 0.5rem;
+  background: var(--text-color);
+}
+html::-webkit-scrollbar-thumb{
+  background: var(--main-color);
+  border-radius: 5rem;
+}
+body{
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+section{
+    padding: 4.5rem 0 1.5rem;
+}
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 100px;
+    transition: 0.5s;
+   
+}
+header.shadow{
+  background: var(--bg-color);
+  box-shadow: 0 0 4px rgb(14 55 54 / 15%);
+}
+header.shadow .navbar a{
+  color: var(--text-color);
+}
+header.shadow .logo{
+  color: var(--text-color);
+}
+.logo{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+.logo .bx{
+    font-size: 24px;
+    color: var(--main-color);
+}
+.navbar{
+    display: flex;
+    column-gap: 5rem;
+
+}
+.navbar li{
+    position: relative;
+
+}
+.navbar a{
+    font-size:1rem ;
+    font-weight: 500;
+    color: var(--bg-color);
+}
+.navbar a::after{
+    content: "";
+    width: 0;
+    height:2px;
+    background: var(--main-color);
+    position:absolute;
+    bottom: -4px;
+    left: 0;
+    transition: 0.4s all linear;
+}
+.navbar a:hover::after, .navbar .home-active::after {
+    width: 100%;
+}
+#menu-icon{
+    font-size:24px ;
+    cursor: pointer ;
+    z-index: 1000001;
+    display: none;
+}
+.btn{
+  padding: 0.7rem 1.4rem;  
+  background: var(--main-color);
+  color: var(--bg-color);
+  font-weight: 400;
+  border-radius: 0.5rem;
+
+}
+.btn:hover{
+    background: 	#6638A6;
+}
+
+.conatiner{
+    width: 100%;
+    min-height: 640px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgb(2 ,3 ,7 ,0.4);
+
+}
+.conatiner img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+
+}
+.swiper-pagination-bullet{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 0.2 rem !important;
+    background:var(--bg-color) !important;
+    opacity: 1 !important;
+}
+.swiper-pagination-bullet-active{
+  width: 1.5rem !important;
+  background: var(--main-color) !important;
+}
+.home-text{
+   z-index: 1000;
+   padding: 0 150px;
+
+}
+.home-text span{
+  color: var(--bg-color);
+  font-weight: 500;
+  text-transform: uppercase ;
+
+}
+.home-text h1{
+  color: var(--bg-color);
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+
+}
+.play{
+  position: absolute;
+  right: 4rem;
+  bottom: 10%;
+}
+.play .bx{
+   background: var(--bg-color);
+   padding: 10px;
+   font-size: 2rem;
+   border-radius: 50%;
+   border:4px solid rgb(2 ,3 ,7 ,0.4);
+   color: var(--main-color);
+}
+.play .bx:hover{
+   background: var(--main-color);
+   color: var(--bg-color);
+   transition: 0.2s all linear;
+}
+.heading{
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--main-color);
+
+}
+.movies-container{
+  max-width: 968px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit , minmax(180px, auto));
+  gap: 1rem;
+  margin-top: 2rem;
+
+}
+.box .box-img{
+  width: 100%;
+  height: 270px;
+
+}
+.box .box-img img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+
+}
+.box .box-img img:hover{
+  transform: translatey(-10px);
+  transition: 0.2s all linear;
+}
+.box h3{
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.box span {
+  font-size: 13px;
+}
+.coming-container{
+  display: grid;
+  gap: 1rem;
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+}
+.coming-container .box-img img:hover{
+  transform: translateY(0);
+}
+.coming-container .box{
+  width: 100px;
+  
+}
+.newsletter{
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2rem;
+}
+.newsletter h2{
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.newsletter form{
+  background:var(--bg-color);
+  padding: 10px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.newsletter form input {
+  border: none;
+  outline: none;
+  
+}
+.newsletter form .email{
+  width: 280px;
+
+}
+.newsletter form input::placeholder{
+  color: var(--text-color);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.newsletter .btn{
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+}
+.footer{
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+
+}
+.social{
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+.social .bx{
+  background: var(--bg-color);
+  padding: 2px;
+  font-size: 2rem;
+  border-radius: 50%;
+  border: 4px solid rgb(2 ,3 ,7 ,0.4);
+  color: var(--main-color);
+}
+.social .bx:hover{
+  background: var(--main-color);
+  color: var(--bg-color);
+  transition: 0.2s all linear;
+}
+.copyright{
+   padding: 20px;
+   text-align: center;
+   color: var(--bg-color);
+}
+
+
+@media (max-width:991px){
+  header{
+    padding: 20px 4%;
+  }
+ iframe{
+    width: 900px;
+    height: 400px;
+ }
+  
+}
+@media (max-width:774px) {
+  header{
+    padding: 12px 4%;
+  }
+  #menu-icon {
+    display: initial;
+    color: var(--bg-color);
+  }
+  header.shadow #menu-icon{
+    color: var(--text-color);
+  }
+  .navbar{
+    position: absolute;
+    top: -570px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background:var(--bg-color) ;
+    row-gap: 1.4rem;  
+    padding: 20px;
+    box-shadow: 4px 4px 0 4px rgb(14 55 54 / 15%);
+    transition: 0.2s all linear;
+    text-align: center;
+  }
+  .navbar a{
+    width: 100%;
+    color: var(--text-color);
+  }
+  .navbar a:hover {
+    color: var(--main-color);
+    border-bottom: 2px solid var(--main-color);
+  }
+  .navbar a::after{
+    display: none;
+
+  }
+  .navbar.active{
+    top: 100%;
+  }
+  .home-text h1{
+    font-size: 2.4rem;
+  }
+  .btn{
+    padding: 0.6rem 1.2rem;
+  }
+  .movies-container{
+    grid-template-columns: repeat(auto-fit, minmax(160px,auto));
+  }
+}
+ @media (max-width:472px){
+   .newsletter form .email {
+    width: auto;
+   }
+   footer{
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+   }
+ }
+ @media (max-width:370px){
+  header{
+    padding:6px 4%;
+  }
+  .home-text h1{
+    font-size: 1.7rem;
+  }
+  .play{
+    right: 2rem;
+    bottom: 8%;
+
+  }
+  .play .bx{
+    padding: 7px;
+
+  }
+  .movies-container{
+    grid-template-columns: repeat(auto-fit, minmax(140px,auto));
+  }
+  .box .box-img{
+    height: 240px;
+
+  }
+ }
+ iframe{
+
+  position: absolute;
+  margin-top: 40px;
+  
+  top: 50%;
+  
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+  
+  }
+  #coming{
+   position: relative;
+   margin-top: 330px;
+  }
+     </style>
+</head>
+<body>
+   <!--Navbar-->
+   <header>
+    <a href="#" class="logo">
+        <i class="bx bxs-movie"></i>PR Movies
+    </a>
+    <div class="bx bx-menu" id="menu-icon"></div>
+     <!--Menu-->
+     <ul class="navbar">
+        <li><a href="moviehome.html" class="home-active">Home</a></li>
+        <li><a href="moviehome.html">Movies</a></li>
+        <li><a href="#coming">Coming soon</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+
+    </ul>
+    <a href="#" class="btn">Sign in</a>
+    </header> 
+
+    
+    <!-- view -->
+
+    <section>
+        <iframe  width="1350" height="700" src="https://youtube.com/embed/a8Gx8wiNbs8"></iframe>
+    </section>
+    
+      <!-- Coming soon -->
+      <section class="coming" id="coming">
+        <h2 class="heading" id="coming">Coming Soon</h2>
+       <!-- Coming Container -->
+       <div class="coming-container swiper">
+        <div class="swiper-wrapper">
+       <!-- Box 1 -->
+       <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/uncharted.jpeg" alt="">   
+    </div>
+    <h3>Uncharted</h3>
+    <span>124 min | Adventure</span>
+</div>
+     <!-- Box 2 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/Thor_love_and_thunder.jpeg" alt="">   
+    </div>
+    <h3>Thor : Love and Thunder</h3>
+    <span>98 min | Adventure,Action,Superhero</span>
+</div>
+     <!-- Box 3 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/Sooryawanshi.jpg" alt="">   
+    </div>
+    <h3>Sooryawanshi</h3>
+    <span>132 min | Action,Drama</span>
+</div>
+     <!-- Box 4 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/Free_guy.jpg" alt="">   
+    </div>
+    <h3>Free Guy</h3>
+    <span>120 min | Sci-fi,Adventure,Comedy</span>
+</div>
+     <!-- Box 5 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/Dr_strange_Multiverse_of_madness.jpeg" alt="">   
+    </div>
+    <h3>Doctor Strange:Multiverse of Madness </h3>
+    <span>120 min | Action,Drama,Fantacy,Superhero</span>
+</div>
+     <!-- Box 6 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/bramhastra.jpeg" alt="">   
+    </div>
+    <h3>Bramhastra : Part 1 shiva</h3>
+    <span>124 min | Adventure,Superhero,Fantacy</span>
+</div>
+     <!-- Box 7 -->
+     <div class="swiper-slide box">
+        <div class="box-img">
+        <img src="images/avatar_2.jpeg" alt="">   
+    </div>
+    <h3>Avatar:Way of Water</h3>
+    <span>110 min | Sci-fi,Adventure,Action</span>
+</div>
+    <!-- Box 8 -->
+        <div class="swiper-slide box">
+            <div class="box-img">
+            <img src="images/RRR.jpeg" alt="">   
+        </div>
+        <h3>RRR:Rize Rore Revolt</h3>
+        <span>120 min | Action,Drama</span>
+    </div>
+        <!-- Box 9 -->
+        <div class="swiper-slide box">
+            <div class="box-img">
+            <img src="images/Black_Adam.jpg" alt="">   
+        </div>
+        <h3>Black Adam</h3>
+        <span>120 min | Action,Superhero</span>
+    </div>
+        </div>
+       </div>
+    </section>
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <h2>Subscribe To Get <br>Newsletter</h2>
+    <form action="">
+        <input type="Email" class="email" placeholder="Enter Email..."required>
+        <input type="submit" vlaue="Subscribe" class="btn">
+    </form>
+  </section>
+     <!-- Footer -->
+
+     <section class="footer">
+        <a href="#" class="logo">
+            <i class="bx bxs-movie"></i>PR Movies
+        </a>
+        <div class="social">
+            <a href="#"><i class='bx bxl-twitter' ></i></a>
+            <a href="#"><i class='bx bxl-facebook' ></i></a>
+            <a href="#"><i class='bx bxl-instagram' ></i></a>
+            <a href="#"><i class='bx bxl-reddit' ></i></a>
+            
+        </div>
+     </section>
+     <!-- Copyright -->
+     <div class="copyright">
+        <p>
+            &#169; P & R All Right Reserved.
+        </p>
+     </div>
+   
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com//swiper/swiper-bundle.min.js"></script>
+    <!-- link to custom JS -->
+    <script src="main.js"></script>
+    
+
+
+
+
+
+</body>
+</html>
